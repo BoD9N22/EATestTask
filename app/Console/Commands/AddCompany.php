@@ -12,7 +12,7 @@ class AddCompany extends Command
      *
      * @var string
      */
-    protected $signature = 'app:add-company';
+    protected $signature = 'app:add-company {name}';
 
     /**
      * The console command description.

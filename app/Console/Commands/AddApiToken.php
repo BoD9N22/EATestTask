@@ -13,7 +13,7 @@ class AddApiToken extends Command
      *
      * @var string
      */
-    protected $signature = 'app:add-api-token';
+    protected $signature = 'app:add-api-token {account_id} {token} {type}';
 
     /**
      * The console command description.

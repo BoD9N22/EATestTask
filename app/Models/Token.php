@@ -18,14 +18,4 @@ class Token extends Model
         return $this->belongsTo(TokenType::class);
     }
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($model) {
-            if (self::where('account_id', $model->account_id)->where('value', $model->value)->exists()) {
-                throw new \Exception('Token already exists for this account');
-            }
-        });
-    }
 }

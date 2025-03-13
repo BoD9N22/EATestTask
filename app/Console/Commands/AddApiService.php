@@ -12,7 +12,7 @@ class AddApiService extends Command
      *
      * @var string
      */
-    protected $signature = 'app:add-api-service';
+    protected $signature = 'app:add-api-service {name}';
 
     /**
      * The console command description.

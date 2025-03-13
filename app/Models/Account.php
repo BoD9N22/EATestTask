@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    protected $fillable = ['company_id', 'api_service_id', 'account_name'];
+    protected $fillable = ['company_id', 'api_service_id', 'token_id'];
 
     public function company()
     {
@@ -18,8 +18,8 @@ class Account extends Model
         return $this->belongsTo(ApiService::class);
     }
 
-    public function tokens()
+    public function token()
     {
-        return $this->hasMany(Token::class);
+        return $this->has(Token::class);
     }
 }

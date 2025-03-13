@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class APIService extends Model
 {
     protected $fillable = ['name'];
+    protected $table = 'api_services';
 
     public function tokens()
     {

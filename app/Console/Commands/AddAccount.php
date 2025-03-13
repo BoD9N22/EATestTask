@@ -3,8 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Models\Account;
+use App\Models\Token;
+use App\Models\APIService;
 use App\Models\Company;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class AddAccount extends Command
 {
@@ -13,7 +16,7 @@ class AddAccount extends Command
      *
      * @var string
      */
-    protected $signature = 'app:add-account';
+    protected $signature = 'app:add-account {companyId} {apiServiceId} {tokenTypeId}';
 
     /**
      * The console command description.
@@ -27,16 +30,35 @@ class AddAccount extends Command
      */
     public function handle()
     {
-        $companyId = $this->argument('company_id');
-        $name = $this->argument('name');
+        $companyId = $this->argument('companyId');
+        $apiServiceId = $this->argument('apiServiceId');
+        $tokenTypeId = $this->argument('tokenTypeId');
 
-        $company = Company::findOrFail($companyId);
+        $company = Company::find($companyId);
+        $apiService = ApiService::find($apiServiceId);
+
+        if (!$company || !$apiService) {
+            $this->error('Компания или API-сервис не найдены.');
+            return;
+        }
 
         $account = Account::create([
-            'company_id' => $company->id,
-            'name' => $name,
+            'company_id' => $companyId,
+            'api_service_id' => $apiServiceId,
         ]);
 
-        $this->info("Аккаунт '{$account->name}' был успешно добавлен для компании '{$company->name}'!");
+        $token = Token::create([
+            'token_type_id' => $tokenTypeId,
+            'value' => Str::random(),
+        ]);
+
+        $account->token_id = $token->id;
+        $account->save();
+
+        $this->info('Аккаунт и токены успешно созданы!');
+    }
+    private function generateToken($type)
+    {
+        return strtoupper(bin2hex(random_bytes(16))) . '_' . $type;
     }
 }

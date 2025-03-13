@@ -14,7 +14,7 @@ class UpdateAPIData extends Command
      *
      * @var string
      */
-    protected $signature = 'app:update-a-p-i-data';
+    protected $signature = 'data:update';
 
     /**
      * The console command description.

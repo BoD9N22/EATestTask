@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->constrained()->onDelete('cascade');
             $table->foreignId('token_type_id')->constrained()->onDelete('cascade');
-            $table->unique(['account_id', 'value']);
+            $table->string('value')->unique();
             $table->timestamps();
         });
     }
@@ -26,8 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tokens', function (Blueprint $table) {
-            $table->dropForeign(['account_id']);
-            $table->dropUnique(['account_id', 'value']);
+            $table->dropUnique(['value']);
         });
     }
 };

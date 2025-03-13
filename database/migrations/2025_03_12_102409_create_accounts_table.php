@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->foreignId('api_service_id')->constrained()->onDelete('cascade');
-            $table->string('account_name');
+            $table->foreignId('token_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->unique(['company_id', 'api_service_id', 'account_name']);
         });
     }
 
